@@ -1,24 +1,24 @@
 # Two-Sum Problem
 
-You're given an array `a` with numbers. Write an algorithm that checks if there are any two entries in the array that add up to a given number `k`. In other words, is there any `a[i] + a[j] == k`?
+You're given an array of numbers. Write an algorithm that checks if there are any two elements in the array that add up to a given number.
 
 There are a variety of solutions to this problem (some better than others). The following solutions both run in **O(n)** time.
 
 # Solution 1
 
-This solution uses a dictionary to store differences between each element in the array and the sum `k` that we're looking for. The dictionary also stores the indices of each element.
+This solution uses a dictionary to store differences between each element in the array and the sum that we're looking for. The dictionary also stores the indices of each element.
 
-With this approach, each key in the dictionary corresponds to a new target value. If one of the successive numbers from the array is equal to one of the dictionary's keys, then we know there exist two numbers that sum to `k`.
+With this approach, each key in the dictionary corresponds to a new target value. If one of the successive numbers from the array is equal to one of the dictionary's keys, then we know there exist two numbers that sum.
 
 ```swift
-func twoSumProblem(_ a: [Int], k: Int) -> ((Int, Int))? {
-  var dict = [Int: Int]()
-
-  for i in 0 ..< a.count {
-    if let newK = dict[a[i]] {
-      return (newK, i)
+func twoSumProblem(_ numbers: [Int], target: Int) -> (Int, Int)? {
+  var dict: [Int: Int] = [:]
+  
+  for (index, number) in numbers.enumerated() {
+    if let otherIndex = dict[number] {
+      return (index, otherIndex)
     } else {
-      dict[k - a[i]] =  i
+      dict[target - number] = index
     }
   }
 
@@ -26,7 +26,7 @@ func twoSumProblem(_ a: [Int], k: Int) -> ((Int, Int))? {
 }
 ```
 
-The `twoSumProblem()` function takes two parameters: the array `a` with the numbers, and `k`, the sum we're looking for. It returns the first set of indices `(i, j)` where `a[i] + a[j] == k`, or `nil` if no two numbers add up to `k`.
+The `twoSumProble` function takes two parameters: the `numbers` array and the target sum you're looking for. It returns the 2 indices with elements that sums up to the target, or `nil` if it can't be found.
 
 Let's take a look at an example and run through the algorithm to see how it works. Given is the array:
 
@@ -38,7 +38,7 @@ Let's find out if there exist two entries whose sum is equal to 10.
 
 Initially, our dictionary is empty. We begin looping through each element:
 
-- **i = 0**: Is `7` in the dictionary? No. We add the difference between the target `k` and the current number to the dictionary. The difference is `10 - 7 = 3`, so the dictionary key is `3`. The value for that key is the current index, `0`. The dictionary now looks like this:
+- **i = 0**: Is `7` in the dictionary? No. We add the difference between the `target` and the current number to the dictionary. The difference is `10 - 7 = 3`, so the dictionary key is `3`. The value for that key is the current index, `0`. The dictionary now looks like this:
 
 ```swift
 [ 3: 0 ]
